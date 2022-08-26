@@ -11,17 +11,13 @@ import { AddressBook } from 'src/app/Model/AddressBook';
 })
 export class FormComponent implements OnInit {
 
-//Getting id from routes snapshot using paramMap for doing update operation
-Id: any = this.route.snapshot.paramMap.get('Id')
 
-  //Injected router to navigate from one component to another component
-  //Injected ActivatedRoute to get access to information about route.here it take id as path variable
+Id: any = this.route.snapshot.paramMap.get('Id')
+ 
   constructor(private router: Router, private _service: AddressbookServiceService,  private route: ActivatedRoute) { }
 
-  // make parameterized constructor of addressbook which is our model
   addressbook: AddressBook = new AddressBook('', '', '', '', '', '', 0, 0);
 
-  //whenever the component is initialized ngOnInit method is invoked first
   ngOnInit(): void {
     console.log("the id is",this.Id);
     this._service.getAddressBookById(this.Id).subscribe((data : any)=>{
@@ -33,19 +29,16 @@ Id: any = this.route.snapshot.paramMap.get('Id')
 
   }
 
-    // navigate user to DashboardComponent
+  
   onDashboard() {
     this.router.navigate(["dashboard"]);
   }
-
-   //Calls insertAddressBook method in service which uses http post method to save addressbook data to the database
-   //and also navigate the user from form view to dashboard view
+  
   onAddContact() {
     console.log(this.addressbook);
-    this._service.insertAddressBook(this.addressbook).subscribe((data :any)=> {
+    this._service.insertAddressBook(this.addressbook).subscribe((data :any) => {
       console.log("Data Addes Sucessfully");
        this.router.navigate(["dashboard"]);
-
     });
     
   }
